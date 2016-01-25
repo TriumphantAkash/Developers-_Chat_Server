@@ -12,14 +12,23 @@ public class Client1 {
 		//sample comment from devMayank branch
 		String sentence;
 		String modifiedSentence;
-		BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));   
-		Socket clientSocket = new Socket("localhost", 6789);   
-		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());   
-		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));   
-		sentence = inFromUser.readLine();   outToServer.writeBytes(sentence + '\n');   
+		BufferedReader inFromUser;
+		Socket clientSocket;
+		DataOutputStream outToServer;
+		BufferedReader inFromServer;
+		while(true){
+		inFromUser = new BufferedReader( new InputStreamReader(System.in));   
+		clientSocket = new Socket("localhost", 6789);   
+		outToServer = new DataOutputStream(clientSocket.getOutputStream());   
+		inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));   
+		sentence = inFromUser.readLine();
+		if(sentence.equals("exit")){
+			clientSocket.close();
+		}
+		outToServer.writeBytes(sentence + '\n');   
 		modifiedSentence = inFromServer.readLine();   
-		System.out.println("FROM SERVER: " + modifiedSentence);   
-		clientSocket.close();
+		System.out.println(modifiedSentence);
+		}
 
 	}
 
