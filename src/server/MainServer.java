@@ -1,3 +1,4 @@
+package server;
 import models.*;
 
 import java.io.BufferedReader;
@@ -17,7 +18,7 @@ import chatThreads.SocketWriteThread;
 
 public class MainServer {
 	//an ArrayList of Clients
-	private static ArrayList<Client> clientList;
+	public static ArrayList<Client> clientList;
 	private static ServerSocket welcomeSocket;
 	private static Client curr_client;
 	

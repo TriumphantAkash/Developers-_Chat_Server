@@ -1,3 +1,4 @@
+package server;
 import java.io.BufferedReader;
 import chatThreads.*;
 import java.io.DataOutputStream;
