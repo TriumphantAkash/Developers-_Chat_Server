@@ -1,35 +1,35 @@
 package models;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 
 public class Client {
 	private String IP;
-	private String id;
-	private InputStream inputStream;
-	private OutputStream outputStream;
+	private int id;
+	private BufferedReader inputStream;
+	private DataOutputStream outputStream;
 	public String getIP() {
 		return IP;
 	}
 	public void setIP(String iP) {
 		IP = iP;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public InputStream getInputStream() {
+	public BufferedReader getInputStream() {
 		return inputStream;
 	}
-	public void setInputStream(InputStream inputStream) {
+	public void setInputStream(BufferedReader inputStream) {
 		this.inputStream = inputStream;
 	}
-	public OutputStream getOutputStream() {
+	public DataOutputStream getOutputStream() {
 		return outputStream;
 	}
-	public void setOutputStream(OutputStream outputStream) {
+	public void setOutputStream(DataOutputStream outputStream) {
 		this.outputStream = outputStream;
 	}
 

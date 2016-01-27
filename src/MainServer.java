@@ -19,15 +19,29 @@ public class MainServer {
 	//an ArrayList of Clients
 	private static ArrayList<Client> clientList;
 	private static ServerSocket welcomeSocket;
+	private static Client curr_client;
 	
 	public static void main(String argv[]) throws IOException {
 		try {
 			welcomeSocket = new ServerSocket(6969);
-		          
+		    clientList = new ArrayList<Client>();
+		    
 			while(true){             
-				Socket connectionSocket = welcomeSocket.accept();             
+				Socket connectionSocket = welcomeSocket.accept();
+				
+				//control comes here whenever a new client is connected to the server
+				connectionSocket.getLocalAddress();
+				connectionSocket.getLocalPort();
+				
+				curr_client.setId(clientList.size()+1);
+				
 				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+				curr_client.setInputStream(inFromClient);
+				
 				DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+				curr_client.setOutputStream(outToClient);
+				
+				clientList.add(curr_client);
 				
 				SocketReadThread socketReadThread = new SocketReadThread(inFromClient);
 				socketReadThread.start();
