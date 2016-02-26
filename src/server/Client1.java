@@ -19,7 +19,7 @@ public class Client1 {
 		BufferedReader inFromServer;
 		//while(true){
 		//inFromUser = new BufferedReader( new InputStreamReader(System.in));   
-		clientSocket = new Socket("localhost", 6789); 
+		clientSocket = new Socket("localhost", 6789);
 		
 		outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
 		SocketWriteThread socketWriteThread = new SocketWriteThread(outToServer);

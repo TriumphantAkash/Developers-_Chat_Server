@@ -34,6 +34,8 @@ public class MainServer {
 				connectionSocket.getLocalAddress();
 				connectionSocket.getLocalPort();
 				
+				//create a new client object and input this into client list
+				curr_client = new Client();
 				curr_client.setId(clientList.size()+1);
 				
 				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -44,11 +46,6 @@ public class MainServer {
 				
 				clientList.add(curr_client);
 				
-				SocketReadThread socketReadThread = new SocketReadThread(inFromClient);
-				socketReadThread.start();
-				
-				SocketWriteThread socketWriteThread = new SocketWriteThread(outToClient);
-				socketWriteThread.start();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -56,5 +53,14 @@ public class MainServer {
 		} finally {
 			welcomeSocket.close();
 		}
+	}
+	
+	void handleClient(Client client){
+		
+		SocketReadThread socketReadThread = new SocketReadThread(client.getInputStream());
+		socketReadThread.start();
+		
+		SocketWriteThread socketWriteThread = new SocketWriteThread(client.getOutputStream());
+		socketWriteThread.start();
 	}
 }
