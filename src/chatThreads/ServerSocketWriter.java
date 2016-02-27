@@ -1,17 +1,12 @@
 package chatThreads;
-import server.*;
+
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-import models.Client;
-
-public class SocketReadThread extends Thread{
+public class ServerSocketWriter extends Thread{
 	BufferedReader inFromServer;
 	String message;
-	public SocketReadThread(BufferedReader inFromServer) {
-		this.inFromServer = inFromServer;
+	public ServerSocketWriter() {
 	}
 	public void run(){
 		try {
@@ -19,9 +14,13 @@ public class SocketReadThread extends Thread{
 				message = inFromServer.readLine();	//a new message is arrived
 				//now broadcast this message i.e
 				//send this message to all active SocketWriteThreads
-				for (Client curr_client : MainServer.clientList) {
-					curr_client.getOutputStream().writeBytes(message);
-				}
+				//read from standard input
+				
+				/*pass this message to SocketriterThread, and he will write it to all the 
+				connected clinet's output streams
+				*/
+				
+			
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -29,5 +28,3 @@ public class SocketReadThread extends Thread{
 		}
 	}
 }
-
-

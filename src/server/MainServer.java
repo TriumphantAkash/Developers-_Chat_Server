@@ -9,12 +9,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
 
-import chatThreads.SocketReadThread;
-import chatThreads.SocketWriteThread;
+import chatThreads.ServerSocketReader;
+import chatThreads.ServerSocketWriter;
 
 //main server which keeps track of all the client
 //THere is no direct communication between the clients
 //Main server is the mediator and keeps track of all input and output channel associated with each client
+
+//there is one reader thread corresponding to each client connects to the server
+//there is just one Writer thead that takes care of all writing whenever any message from any
+//client is received
 
 public class MainServer {
 	//an ArrayList of Clients
@@ -26,6 +30,11 @@ public class MainServer {
 		try {
 			welcomeSocket = new ServerSocket(6969);
 		    clientList = new ArrayList<Client>();
+		    
+		    //for now let's assume there will be a single socket writer thread that will
+		    //write to all the connected clinet's output streams
+		    ServerSocketWriter serverWriteThread = new ServerSocketWriter();
+		    serverWriteThread.start();
 		    
 			while(true){             
 				Socket connectionSocket = welcomeSocket.accept();
@@ -46,7 +55,10 @@ public class MainServer {
 				
 				clientList.add(curr_client);
 				
+				handleClient(curr_client);
+				
 			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,12 +67,11 @@ public class MainServer {
 		}
 	}
 	
-	void handleClient(Client client){
+	//will create a separate Socket Reader thread for each client that connects to the server
+	static void handleClient(Client client){
 		
-		SocketReadThread socketReadThread = new SocketReadThread(client.getInputStream());
+		ServerSocketReader socketReadThread = new ServerSocketReader(client.getInputStream());
 		socketReadThread.start();
-		
-		SocketWriteThread socketWriteThread = new SocketWriteThread(client.getOutputStream());
-		socketWriteThread.start();
+
 	}
 }

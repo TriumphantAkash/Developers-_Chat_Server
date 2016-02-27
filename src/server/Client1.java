@@ -22,11 +22,11 @@ public class Client1 {
 		clientSocket = new Socket("localhost", 6789);
 		
 		outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
-		SocketWriteThread socketWriteThread = new SocketWriteThread(outToServer);
+		ClientSocketWriter socketWriteThread = new ClientSocketWriter(outToServer);
 		socketWriteThread.start();
 		
 		inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));  
-		SocketReadThread socketReadThread = new SocketReadThread(inFromServer);
+		ClientSocketReader socketReadThread = new ClientSocketReader(inFromServer);
 		socketReadThread.start();
 		
 		//sentence = inFromUser.readLine();
