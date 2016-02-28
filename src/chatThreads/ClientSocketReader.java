@@ -15,11 +15,11 @@ public class ClientSocketReader extends Thread{
 	}
 	public void run(){
 		try {
+			System.out.println("client reader thread is up and running");
 			while(true){
 				Thread.sleep(2000);
-				System.out.println("client reader thread is up and running");
 				message = inFromServer.readLine();	//a new message is arrived
-				System.out.println(message);
+				System.out.println("got this message from main server: "+message+"\n");
 			}
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block

@@ -38,8 +38,8 @@ public class ServerSocketWriter extends Thread{
 				//a message here from any of the ServerSocketReader thread)
 				//2) write this message to outputstreams of all connected clients
 				for(Client client: MainServer.clientList){
-					client.getOutputStream().writeBytes(message);
-					Thread.sleep(2000);
+					client.getOutputStream().writeBytes(message+"\n");
+					Thread.sleep(500);
 				}
 				
 				
