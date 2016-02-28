@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import chatThreads.ServerSocketReader;
 import chatThreads.ServerSocketWriter;
@@ -25,15 +27,17 @@ public class MainServer {
 	public static ArrayList<Client> clientList;
 	private static ServerSocket welcomeSocket;
 	private static Client curr_client;
+	private static BlockingQueue<String> queue = null;
 	
 	public static void main(String argv[]) throws IOException {
 		try {
 			welcomeSocket = new ServerSocket(6969);
 		    clientList = new ArrayList<Client>();
-		    
+		    queue = new ArrayBlockingQueue<String>(1000);
 		    //for now let's assume there will be a single socket writer thread that will
 		    //write to all the connected clinet's output streams
-		    ServerSocketWriter serverWriteThread = new ServerSocketWriter();
+		    //Consumer of BlockingQueue
+		    ServerSocketWriter serverWriteThread = new ServerSocketWriter(queue);
 		    serverWriteThread.start();
 		    
 			while(true){             
@@ -70,7 +74,7 @@ public class MainServer {
 	//will create a separate Socket Reader thread for each client that connects to the server
 	static void handleClient(Client client){
 		
-		ServerSocketReader socketReadThread = new ServerSocketReader(client.getInputStream());
+		ServerSocketReader socketReadThread = new ServerSocketReader(client.getInputStream(), queue);
 		socketReadThread.start();
 
 	}

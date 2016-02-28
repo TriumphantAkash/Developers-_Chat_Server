@@ -16,10 +16,12 @@ public class ClientSocketReader extends Thread{
 	public void run(){
 		try {
 			while(true){
+				Thread.sleep(2000);
+				System.out.println("client reader thread is up and running");
 				message = inFromServer.readLine();	//a new message is arrived
 				System.out.println(message);
 			}
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

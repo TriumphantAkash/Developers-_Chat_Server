@@ -5,31 +5,42 @@
 package chatThreads;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 
-import models.Client;
 
 public class ServerSocketReader extends Thread{
 	BufferedReader inFromServer;
 	String message;
-	public ServerSocketReader(BufferedReader inFromServer) {
+	BlockingQueue<String> bq = null;
+	public ServerSocketReader(BufferedReader inFromServer, BlockingQueue<String> queue) {
 		this.inFromServer = inFromServer;
+		this.bq = queue;
 	}
+	
 	public void run(){
 		try {
 			while(true){
 				message = inFromServer.readLine();	//a new message is arrived
 				//now broadcast this message i.e
-				//send this message to all active SocketWriteThreads
-				//read from standard input
-				
-				/*pass this message to SocketriterThread, and he will write it to all the 
+				//hand this message to ServerSocketWriter thread
+				/*
+				 * .
+				 * (do stuff here)
+				 */
+				bq.put(message);
+				 /* .
+				 * ..
+				 * */
+				/*pass this message to SocketWriterThread, and he will write it to all the 
 				connected clinet's output streams
-				*/
+				(may be I can use some Looper or something)*/
 				
 			
 			}
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
