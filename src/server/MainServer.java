@@ -31,7 +31,7 @@ public class MainServer {
 	
 	public static void main(String argv[]) throws IOException {
 		try {
-			welcomeSocket = new ServerSocket(6969);
+			welcomeSocket = new ServerSocket(6970);
 		    clientList = new ArrayList<Client>();
 		    queue = new ArrayBlockingQueue<String>(1000);
 		    //for now let's assume there will be a single socket writer thread that will

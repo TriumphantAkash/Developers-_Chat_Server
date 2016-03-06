@@ -28,7 +28,9 @@ public class ServerSocketReader extends Thread{
 				 * .
 				 * (do stuff here)
 				 */
-				bq.put(message);
+				if((bq!=null) && (message != null)){
+					bq.put(message);
+				}
 				 /* .
 				 * ..
 				 * */

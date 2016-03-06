@@ -19,7 +19,7 @@ public class MobileClient {
 		BufferedReader inFromServer;
 		//while(true){
 		//inFromUser = new BufferedReader( new InputStreamReader(System.in));   
-		clientSocket = new Socket("localhost", 6969);
+		clientSocket = new Socket("10.24.27.194", 6969);
 		
 		outToServer = new DataOutputStream(clientSocket.getOutputStream()); 
 		ClientSocketWriter socketWriteThread = new ClientSocketWriter(outToServer);
