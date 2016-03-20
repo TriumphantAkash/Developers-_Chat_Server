@@ -40,7 +40,8 @@ public class MainServer {
 		    ServerSocketWriter serverWriteThread = new ServerSocketWriter(queue);
 		    serverWriteThread.start();
 		    
-			while(true){             
+			while(true){
+				System.out.println("[Developers' chat] server is up and running baby...");
 				Socket connectionSocket = welcomeSocket.accept();
 				
 				//control comes here whenever a new client is connected to the server
@@ -74,7 +75,7 @@ public class MainServer {
 	//will create a separate Socket Reader thread for each client that connects to the server
 	static void handleClient(Client client){
 		
-		ServerSocketReader socketReadThread = new ServerSocketReader(client.getInputStream(), queue);
+		ServerSocketReader socketReadThread = new ServerSocketReader(client, queue);
 		socketReadThread.start();
 
 	}
